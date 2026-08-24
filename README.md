@@ -1,7 +1,7 @@
 # Website Project Brief Builder
 
-A browser-private Evolved Designs tool for turning a WordPress, ecommerce, content, operations, or automation request into a focused first-phase brief.
+A browser-private Evolved Designs tool for turning a WordPress, ecommerce, content, operations, or automation request into a focused first-phase brief, with separate private-contact and public technical-review routes.
 
 Public URL: https://evolved-designs.github.io/website-project-brief-builder/
 
-The tool stores and sends no selections. A deliberate contact click carries only the chosen project type and broad readiness band.
+The tool stores and sends no selections. A deliberate private-contact click carries only the chosen project type and broad readiness band. The separate GitHub review route is public and explicitly excludes confidential details.
