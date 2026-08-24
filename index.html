@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Website Project Brief Builder | Evolved Designs</title>
+  <meta name="description" content="Turn a WordPress, ecommerce, content, operations, or automation request into a focused first-phase website brief.">
+  <link rel="canonical" href="https://evolved-designs.github.io/website-project-brief-builder/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Website Project Brief Builder | Evolved Designs">
+  <meta property="og:description" content="Name the website decisions a developer needs before a responsible scope and handoff.">
+  <meta property="og:url" content="https://evolved-designs.github.io/website-project-brief-builder/">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Website Project Brief Builder",
+          "description": "A browser-private project brief builder for WordPress, ecommerce, content, website operations, and responsible automation work.",
+          "url": "https://evolved-designs.github.io/website-project-brief-builder/",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Any",
+          "browserRequirements": "Requires JavaScript",
+          "isAccessibleForFree": true,
+          "creator": {"@type": "Organization", "name": "Evolved Designs", "url": "https://evolveddesigns.net/"}
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does this tool produce a website price?",
+              "acceptedAnswer": {"@type": "Answer", "text": "No. It identifies the first unresolved project decision so a responsible scope can be prepared."}
+            },
+            {
+              "@type": "Question",
+              "name": "Are project selections submitted?",
+              "acceptedAnswer": {"@type": "Answer", "text": "No. Selections stay in the browser. A deliberate contact click carries only the project type and broad readiness band."}
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="mast">
+    <nav class="shell nav" aria-label="Primary">
+      <a class="brand" href="https://evolveddesigns.net/?utm_source=github_pages&amp;utm_medium=owned_tool&amp;utm_campaign=project_brief_builder">Evolved Designs</a>
+      <span>Website project brief</span>
+    </nav>
+    <div class="shell hero">
+      <div>
+        <p class="eyebrow">For teams hiring website help</p>
+        <h1>Give the project a clear first phase.</h1>
+        <p class="lede">A page count is not a handoff. Clarify the outcome, editing model, integrations, quality checks, and ownership decisions a developer needs before committing to scope.</p>
+      </div>
+      <aside class="brief-card" aria-label="Builder boundary">
+        <strong>Focused, not bloated.</strong>
+        <p>You will get the first unresolved decision and a copyable brief—not a made-up estimate.</p>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section class="context shell" aria-labelledby="why-title">
+      <div>
+        <p class="eyebrow">What changed</p>
+        <h2 id="why-title">Modern website work crosses content, experience, and operations.</h2>
+      </div>
+      <div>
+        <p>WordPress now supports site-wide block editing, but the editing model still depends on the chosen theme and governance. W3C guidance calls for short, clearly labeled forms with useful feedback. Google recommends measuring loading, interactivity, and visual stability with real-user evidence.</p>
+        <div class="source-row" aria-label="Primary sources">
+          <a href="https://wordpress.org/documentation/article/site-editor/">WordPress Site Editor</a>
+          <a href="https://www.w3.org/WAI/tutorials/forms/">W3C accessible forms</a>
+          <a href="https://web.dev/articles/vitals">Google Web Vitals</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="builder shell" aria-label="Website project brief builder">
+      <form class="panel choices" data-builder>
+        <fieldset class="project-type">
+          <legend>What are you trying to ship?</legend>
+          <label><input type="radio" name="project" value="company" checked><span><strong>Company website</strong><small>Service pages, trust, contact paths, and an editing handoff.</small></span></label>
+          <label><input type="radio" name="project" value="commerce"><span><strong>Ecommerce</strong><small>Catalog, checkout, payment, fulfillment, and lifecycle integrations.</small></span></label>
+          <label><input type="radio" name="project" value="content"><span><strong>Content or blog</strong><small>Reusable publishing, archives, search visibility, and moderation.</small></span></label>
+          <label><input type="radio" name="project" value="operations"><span><strong>Ongoing operations</strong><small>Maintenance, analytics, forms, integrations, and a priority queue.</small></span></label>
+          <label><input type="radio" name="project" value="automation"><span><strong>Responsible automation</strong><small>Structured inputs, staging, review gates, evidence, and rollback.</small></span></label>
+        </fieldset>
+
+        <fieldset class="decision-list">
+          <legend>Which decisions can your team defend today?</legend>
+          <p class="hint">Check only what is confirmed—not what a vendor might guess.</p>
+          <label><input type="checkbox" value="outcome"><span><strong>Outcome and success signal</strong><small>The business result and one observable measure are named.</small></span></label>
+          <label><input type="checkbox" value="journey"><span><strong>Priority audience journey</strong><small>The visitor, task, next step, and highest-value path are clear.</small></span></label>
+          <label><input type="checkbox" value="content"><span><strong>Content and owner</strong><small>Required pages, source material, approver, and missing assets are known.</small></span></label>
+          <label><input type="checkbox" value="editing"><span><strong>Editing workflow</strong><small>The people who publish, reusable content model, and training boundary are set.</small></span></label>
+          <label><input type="checkbox" value="integrations"><span><strong>Commerce and integrations</strong><small>Payments, forms, calendars, email, APIs, and data owners are mapped.</small></span></label>
+          <label><input type="checkbox" value="quality"><span><strong>Accessibility and forms</strong><small>Labels, instructions, errors, keyboard use, and manual checks have acceptance rules.</small></span></label>
+          <label><input type="checkbox" value="measurement"><span><strong>Performance and measurement</strong><small>Critical pages, field metrics, analytics events, and reporting owners are defined.</small></span></label>
+          <label><input type="checkbox" value="care"><span><strong>Launch, recovery, and care</strong><small>Staging, approvals, rollback, backups, support, and ongoing ownership are clear.</small></span></label>
+        </fieldset>
+      </form>
+
+      <aside class="panel output" aria-live="polite">
+        <p class="eyebrow">Your brief signal</p>
+        <div class="score"><strong data-score>0/8</strong><span data-band>Discovery first</span></div>
+        <h2 data-phase>Start with the outcome and visitor journey.</h2>
+        <p data-summary>The implementation is still carrying business decisions. Resolve the first unknowns before asking for a fixed scope.</p>
+        <div class="next-block">
+          <h3>First unresolved decision</h3>
+          <p data-gap>Name the business outcome and one observable success signal.</p>
+        </div>
+        <div class="actions">
+          <button class="button secondary" type="button" data-copy>Copy project brief</button>
+          <a class="button" data-contact href="https://evolveddesigns.net/contact-us/?utm_source=github_pages&amp;utm_medium=owned_tool&amp;utm_campaign=project_brief_builder&amp;utm_content=company_discovery">Scope the smallest useful phase</a>
+        </div>
+        <p class="privacy">Selections stay in this browser. The contact link carries only the project type and broad readiness band—never the individual answers.</p>
+      </aside>
+    </section>
+
+    <section class="handoff shell" aria-labelledby="handoff-title">
+      <p class="eyebrow">A better first conversation</p>
+      <h2 id="handoff-title">Lead with the result, the critical journey, and the first decision you cannot resolve alone.</h2>
+      <p>That gives a developer enough context to recommend a bounded phase without pretending every unknown is already priced.</p>
+    </section>
+  </main>
+
+  <footer><div class="shell">A free planning resource from Evolved Designs. It is not a price quote, contract, accessibility audit, or guarantee.</div></footer>
+</body>
+</html>
