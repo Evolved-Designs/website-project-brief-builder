@@ -97,6 +97,8 @@ export function downloadTextFile(filename, text) {
   URL.revokeObjectURL(url);
 }
 
+const draftKey = 'evolved-project-brief-draft-v1';
+
 function init() {
   const form = document.querySelector('[data-builder]');
   if (!form) return;
@@ -114,11 +116,49 @@ function init() {
   const contact = document.querySelector('[data-contact]');
   const copy = document.querySelector('[data-copy]');
   const download = document.querySelector('[data-download]');
+  const clear = document.querySelector('[data-clear]');
+  const storageStatus = document.querySelector('[data-storage-status]');
   const selected = () => boxes.filter((box) => box.checked).map((box) => box.value);
   const project = () => types.find((type) => type.checked)?.value ?? 'company';
   const commerce = () => Object.fromEntries(commerceFields.map((field) => [field.dataset.commerceField, field.value]));
   const company = () => Object.fromEntries(companyFields.map((field) => [field.dataset.companyField, field.value]));
   const scope = () => project() === 'commerce' ? commerce() : ['company', 'publication'].includes(project()) ? company() : {};
+
+  function saveDraft() {
+    try {
+      localStorage.setItem(draftKey, JSON.stringify({
+        project: project(),
+        selected: selected(),
+        commerce: commerce(),
+        company: company()
+      }));
+      storageStatus.textContent = 'Draft saved only in this browser. Clear it whenever the project changes. Copying or downloading creates a local handoff only; contact links never carry the individual answers.';
+    } catch {
+      storageStatus.textContent = 'Browser draft storage is unavailable. Copy or download the brief if you need a local handoff; contact links never carry the individual answers.';
+    }
+  }
+
+  function restoreDraft() {
+    try {
+      const draft = JSON.parse(localStorage.getItem(draftKey) || 'null');
+      if (!draft || typeof draft !== 'object') return;
+      const savedType = types.find((type) => type.value === draft.project);
+      if (savedType) savedType.checked = true;
+      const savedDecisions = new Set(Array.isArray(draft.selected) ? draft.selected : []);
+      boxes.forEach((box) => { box.checked = savedDecisions.has(box.value); });
+      for (const field of commerceFields) {
+        const value = draft.commerce?.[field.dataset.commerceField];
+        if ([...field.options].some((option) => option.value === value)) field.value = value;
+      }
+      for (const field of companyFields) {
+        const value = draft.company?.[field.dataset.companyField];
+        if ([...field.options].some((option) => option.value === value)) field.value = value;
+      }
+      storageStatus.textContent = 'Saved browser draft restored. Clear it if this is a different project; nothing was sent.';
+    } catch {
+      localStorage.removeItem(draftKey);
+    }
+  }
 
   function render() {
     const values = selected();
@@ -147,9 +187,19 @@ function init() {
     window.setTimeout(() => { download.textContent = 'Download project brief'; }, 1800);
   }
 
-  [...boxes, ...types, ...commerceFields, ...companyFields].forEach((control) => control.addEventListener('change', render));
+  [...boxes, ...types, ...commerceFields, ...companyFields].forEach((control) => control.addEventListener('change', () => {
+    saveDraft();
+    render();
+  }));
   copy.addEventListener('click', () => copyBrief().catch(() => { copy.textContent = 'Copy unavailable'; }));
   download.addEventListener('click', downloadBrief);
+  clear.addEventListener('click', () => {
+    form.reset();
+    localStorage.removeItem(draftKey);
+    storageStatus.textContent = 'Saved browser draft cleared. Nothing was submitted.';
+    render();
+  });
+  restoreDraft();
   render();
 }
 
