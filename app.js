@@ -64,9 +64,11 @@ export function companyBriefLines(details = {}) {
   const labels = [
     ['audiences', 'Priority audiences'],
     ['architecture', 'Service architecture'],
+    ['estate', 'Site estate'],
     ['conversion', 'Primary conversion'],
     ['content', 'Content readiness'],
     ['systems', 'Forms and systems'],
+    ['automation', 'AI or automation role'],
     ['risk', 'Data or compliance boundary']
   ];
   return labels.map(([key, label]) => `${label}: ${details[key] || 'unknown'}`);

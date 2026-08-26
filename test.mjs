@@ -11,9 +11,11 @@ assert.match(briefText('commerce', ['outcome'], { catalog: '26–100 products', 
 assert.match(briefText('commerce', ['outcome'], { catalog: '26–100 products', fulfillment: 'Multiple zones' }), /Fulfillment: Multiple zones/);
 assert.doesNotMatch(briefText('company', ['outcome'], { catalog: '26–100 products' }), /Commerce boundaries/);
 assert.equal(commerceBriefLines({ payments: 'One standard payment gateway' }).length, 6);
-assert.equal(companyBriefLines({ audiences: 'Two distinct buyer journeys' }).length, 6);
-assert.match(briefText('company', ['outcome'], { audiences: 'Two distinct buyer journeys', conversion: 'Qualified intake' }), /Priority audiences: Two distinct buyer journeys/);
-assert.match(briefText('company', ['outcome'], { audiences: 'Two distinct buyer journeys', conversion: 'Qualified intake' }), /Primary conversion: Qualified intake/);
+assert.equal(companyBriefLines({ audiences: 'Two distinct buyer journeys' }).length, 8);
+assert.match(briefText('company', ['outcome'], { audiences: 'Two distinct buyer journeys', conversion: 'Qualified intake', estate: 'Multiple sites, brands, or regions', automation: 'Assistive content or workflow automation' }), /Priority audiences: Two distinct buyer journeys/);
+assert.match(briefText('company', ['outcome'], { audiences: 'Two distinct buyer journeys', conversion: 'Qualified intake', estate: 'Multiple sites, brands, or regions', automation: 'Assistive content or workflow automation' }), /Primary conversion: Qualified intake/);
+assert.match(briefText('company', ['outcome'], { estate: 'Multiple sites, brands, or regions' }), /Site estate: Multiple sites, brands, or regions/);
+assert.match(briefText('company', ['outcome'], { automation: 'Assistive content or workflow automation' }), /AI or automation role: Assistive content or workflow automation/);
 assert.doesNotMatch(briefText('commerce', ['outcome'], { audiences: 'Two distinct buyer journeys' }), /Company website boundaries/);
 assert.match(briefText('automation', ['outcome', 'journey']), /This is a scope signal, not a price estimate or contract/);
 console.log('website-project-brief-builder tests passed');
