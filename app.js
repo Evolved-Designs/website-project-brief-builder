@@ -38,7 +38,7 @@ export function phaseCopy(selected = []) {
 }
 
 export function contactUrl(project = 'company', selected = []) {
-  const types = ['company', 'commerce', 'content', 'operations', 'automation'];
+  const types = ['company', 'commerce', 'content', 'publication', 'operations', 'automation'];
   const valid = types.includes(project) ? project : 'company';
   const url = new URL('https://evolveddesigns.net/contact-us/');
   url.searchParams.set('utm_source', 'github_pages');
@@ -67,6 +67,7 @@ export function companyBriefLines(details = {}) {
     ['estate', 'Site estate'],
     ['conversion', 'Primary conversion'],
     ['content', 'Content readiness'],
+    ['governance', 'Publishing governance'],
     ['systems', 'Forms and systems'],
     ['automation', 'AI or automation role'],
     ['risk', 'Data or compliance boundary']
@@ -80,8 +81,8 @@ export function briefText(project = 'company', selected = [], scope = {}) {
   const commerceSection = project === 'commerce'
     ? `\n\nCommerce boundaries\n${commerceBriefLines(scope).join('\n')}`
     : '';
-  const companySection = project === 'company'
-    ? `\n\nCompany website boundaries\n${companyBriefLines(scope).join('\n')}`
+  const companySection = ['company', 'publication'].includes(project)
+    ? `\n\n${project === 'publication' ? 'Research or publication website' : 'Company website'} boundaries\n${companyBriefLines(scope).join('\n')}`
     : '';
   return `Website project first-phase brief\n\nProject type: ${project}\nReadiness: ${signal.label} (${new Set(selected).size}/8 decisions owned)\nRecommended phase: ${phase.heading}\nWhy: ${phase.summary}\nFirst unresolved decision: ${firstGap(selected)}${companySection}${commerceSection}\n\nThis is a scope signal, not a price estimate or contract.`;
 }
@@ -117,7 +118,7 @@ function init() {
   const project = () => types.find((type) => type.checked)?.value ?? 'company';
   const commerce = () => Object.fromEntries(commerceFields.map((field) => [field.dataset.commerceField, field.value]));
   const company = () => Object.fromEntries(companyFields.map((field) => [field.dataset.companyField, field.value]));
-  const scope = () => project() === 'commerce' ? commerce() : project() === 'company' ? company() : {};
+  const scope = () => project() === 'commerce' ? commerce() : ['company', 'publication'].includes(project()) ? company() : {};
 
   function render() {
     const values = selected();
@@ -131,7 +132,7 @@ function init() {
     contact.textContent = signal.cta;
     contact.href = contactUrl(project(), values);
     commerceScope.hidden = project() !== 'commerce';
-    companyScope.hidden = project() !== 'company';
+    companyScope.hidden = !['company', 'publication'].includes(project());
   }
 
   async function copyBrief() {
