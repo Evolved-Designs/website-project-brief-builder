@@ -14,7 +14,7 @@
 html { color-scheme: light; }
 body { margin: 0; color: var(--ink); background: var(--paper); font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 a { color: var(--green-dark); text-underline-offset: .18em; }
-button, input { font: inherit; }
+button, input, select { font: inherit; }
 .shell { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
 .mast { color: var(--white); background: var(--ink); border-bottom: 8px solid var(--gold); }
 .nav { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; color: #b8d0ca; font-size: .84rem; letter-spacing: .08em; text-transform: uppercase; }
@@ -43,6 +43,12 @@ legend { width: 100%; margin-bottom: 18px; font: 800 1.35rem/1.2 Georgia, "Times
 .project-type input, .decision-list input { position: absolute; inset: 17px auto auto 15px; accent-color: var(--green); }
 .project-type span { width: 100%; min-height: 170px; padding: 16px 12px 14px 42px; background: #f1f6f4; border: 1px solid transparent; }
 .project-type input:checked + span { background: #e0efe9; border-color: var(--green); }
+.commerce-scope { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 28px; padding: 28px; background: #f8f3e9; border: 1px solid #d9c9aa; }
+.commerce-scope[hidden] { display: none; }
+.commerce-scope legend, .commerce-scope .hint { grid-column: 1 / -1; }
+.commerce-scope label { display: grid; gap: 10px; align-content: start; padding: 16px; background: var(--white); border: 1px solid #d9c9aa; }
+.commerce-scope select { width: 100%; min-height: 46px; padding: 8px 10px; color: var(--ink); background: #fff; border: 1px solid var(--line); }
+.commerce-scope select:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 label strong, label small { display: block; }
 label small { margin-top: 5px; color: var(--muted); line-height: 1.4; }
 .decision-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding-top: 28px; }
@@ -84,8 +90,8 @@ footer { padding-block: 28px; color: #cedbd7; background: var(--ink); font-size:
   .nav { align-items: flex-start; flex-direction: column; justify-content: center; gap: 2px; }
   .hero { padding-block: 54px 64px; }
   h1 { font-size: clamp(2.55rem, 15vw, 4.2rem); }
-  .project-type, .decision-list { grid-template-columns: 1fr; }
-  .project-type legend, .decision-list legend, .decision-list .hint { grid-column: auto; }
+  .project-type, .decision-list, .commerce-scope { grid-template-columns: 1fr; }
+  .project-type legend, .decision-list legend, .decision-list .hint, .commerce-scope legend, .commerce-scope .hint { grid-column: auto; }
   .project-type span { min-height: 0; }
   .choices, .output { padding: 22px; }
   .handoff { padding: 28px 22px; }

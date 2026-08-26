@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Website Project Brief Builder | Evolved Designs</title>
-  <meta name="description" content="Turn a WordPress, ecommerce, content, operations, or automation request into a focused first-phase website brief.">
+  <meta name="description" content="Turn a WordPress, ecommerce, content, operations, or automation request into a focused first-phase website brief, including catalog, market, payment, shipping, and content boundaries for stores.">
   <link rel="canonical" href="https://evolved-designs.github.io/website-project-brief-builder/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Website Project Brief Builder | Evolved Designs">
@@ -18,7 +18,7 @@
         {
           "@type": "WebApplication",
           "name": "Website Project Brief Builder",
-          "description": "A browser-private project brief builder for WordPress, ecommerce, content, website operations, and responsible automation work.",
+          "description": "A browser-private project brief builder for WordPress, ecommerce, content, website operations, and responsible automation work, with local ecommerce scope boundaries for catalog, markets, payments, shipping, and content.",
           "url": "https://evolved-designs.github.io/website-project-brief-builder/",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Any",
@@ -93,6 +93,17 @@
           <label><input type="radio" name="project" value="automation"><span><strong>Responsible automation</strong><small>Structured inputs, staging, review gates, evidence, and rollback.</small></span></label>
         </fieldset>
 
+        <fieldset class="commerce-scope" data-commerce-scope hidden>
+          <legend>Which store boundaries can you name?</legend>
+          <p class="hint">These choices stay in your browser and appear only in the copied or downloaded brief.</p>
+          <label><span><strong>Catalog scale</strong><small>Products and variants affect migration, templates, QA, and launch work.</small></span><select data-commerce-field="catalog" aria-label="Catalog scale"><option value="unknown">Not confirmed</option><option value="1–25 products">1–25 products</option><option value="26–100 products">26–100 products</option><option value="101–500 products">101–500 products</option><option value="More than 500 products">More than 500 products</option></select></label>
+          <label><span><strong>Variant model</strong><small>Name ordinary options or any product configuration logic.</small></span><select data-commerce-field="variants" aria-label="Variant model"><option value="unknown">Not confirmed</option><option value="Simple products">Simple products</option><option value="Size, color, or similar variants">Size, color, or similar variants</option><option value="Configured or dependent options">Configured or dependent options</option></select></label>
+          <label><span><strong>Markets</strong><small>Currency, language, tax, and compliance follow the selling regions.</small></span><select data-commerce-field="markets" aria-label="Selling markets"><option value="unknown">Not confirmed</option><option value="One domestic market">One domestic market</option><option value="Multiple regions in one language">Multiple regions in one language</option><option value="International or multilingual">International or multilingual</option></select></label>
+          <label><span><strong>Payments</strong><small>Keep standard checkout separate from subscriptions or B2B terms.</small></span><select data-commerce-field="payments" aria-label="Payment model"><option value="unknown">Not confirmed</option><option value="One standard payment gateway">One standard payment gateway</option><option value="Multiple or local payment methods">Multiple or local payment methods</option><option value="Subscriptions, invoicing, or B2B terms">Subscriptions, invoicing, or B2B terms</option></select></label>
+          <label><span><strong>Fulfillment</strong><small>Origins, zones, rates, carriers, and outside systems shape the order flow.</small></span><select data-commerce-field="fulfillment" aria-label="Fulfillment model"><option value="unknown">Not confirmed</option><option value="One origin and simple rates">One origin and simple rates</option><option value="Multiple zones, carriers, or rate rules">Multiple zones, carriers, or rate rules</option><option value="3PL, dropship, or multiple origins">3PL, dropship, or multiple origins</option></select></label>
+          <label><span><strong>Product content</strong><small>Descriptions, specifications, media, and migration need owners.</small></span><select data-commerce-field="content" aria-label="Product content readiness"><option value="unknown">Not confirmed</option><option value="Descriptions and media are ready">Descriptions and media are ready</option><option value="Content is partial or needs migration">Content is partial or needs migration</option><option value="Content production is part of the project">Content production is part of the project</option></select></label>
+        </fieldset>
+
         <fieldset class="decision-list">
           <legend>Which decisions can your team defend today?</legend>
           <p class="hint">Check only what is confirmed—not what a vendor might guess.</p>
@@ -129,7 +140,7 @@
     <section class="handoff shell" aria-labelledby="handoff-title">
       <p class="eyebrow">A better first conversation</p>
       <h2 id="handoff-title">Lead with the result, the critical journey, and the first decision you cannot resolve alone.</h2>
-      <p>That gives a developer enough context to recommend a bounded phase without pretending every unknown is already priced.</p>
+      <p>That gives a developer enough context to recommend a bounded phase without pretending every unknown is already priced. For ecommerce, include the catalog, variant, market, payment, fulfillment, and product-content boundaries that change delivery work.</p>
     </section>
   </main>
 

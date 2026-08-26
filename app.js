@@ -48,10 +48,25 @@ export function contactUrl(project = 'company', selected = []) {
   return url.toString();
 }
 
-export function briefText(project = 'company', selected = []) {
+export function commerceBriefLines(details = {}) {
+  const labels = [
+    ['catalog', 'Catalog scale'],
+    ['variants', 'Variant model'],
+    ['markets', 'Markets'],
+    ['payments', 'Payments'],
+    ['fulfillment', 'Fulfillment'],
+    ['content', 'Product content']
+  ];
+  return labels.map(([key, label]) => `${label}: ${details[key] || 'unknown'}`);
+}
+
+export function briefText(project = 'company', selected = [], commerce = {}) {
   const signal = projectSignal(selected);
   const phase = phaseCopy(selected);
-  return `Website project first-phase brief\n\nProject type: ${project}\nReadiness: ${signal.label} (${new Set(selected).size}/8 decisions owned)\nRecommended phase: ${phase.heading}\nWhy: ${phase.summary}\nFirst unresolved decision: ${firstGap(selected)}\n\nThis is a scope signal, not a price estimate or contract.`;
+  const commerceSection = project === 'commerce'
+    ? `\n\nCommerce boundaries\n${commerceBriefLines(commerce).join('\n')}`
+    : '';
+  return `Website project first-phase brief\n\nProject type: ${project}\nReadiness: ${signal.label} (${new Set(selected).size}/8 decisions owned)\nRecommended phase: ${phase.heading}\nWhy: ${phase.summary}\nFirst unresolved decision: ${firstGap(selected)}${commerceSection}\n\nThis is a scope signal, not a price estimate or contract.`;
 }
 
 export function downloadTextFile(filename, text) {
@@ -69,6 +84,8 @@ function init() {
   if (!form) return;
   const boxes = [...form.querySelectorAll('input[type="checkbox"]')];
   const types = [...form.querySelectorAll('input[name="project"]')];
+  const commerceScope = form.querySelector('[data-commerce-scope]');
+  const commerceFields = [...form.querySelectorAll('[data-commerce-field]')];
   const score = document.querySelector('[data-score]');
   const band = document.querySelector('[data-band]');
   const phase = document.querySelector('[data-phase]');
@@ -79,6 +96,7 @@ function init() {
   const download = document.querySelector('[data-download]');
   const selected = () => boxes.filter((box) => box.checked).map((box) => box.value);
   const project = () => types.find((type) => type.checked)?.value ?? 'company';
+  const commerce = () => Object.fromEntries(commerceFields.map((field) => [field.dataset.commerceField, field.value]));
 
   function render() {
     const values = selected();
@@ -91,21 +109,22 @@ function init() {
     gap.textContent = firstGap(values);
     contact.textContent = signal.cta;
     contact.href = contactUrl(project(), values);
+    commerceScope.hidden = project() !== 'commerce';
   }
 
   async function copyBrief() {
-    await navigator.clipboard.writeText(briefText(project(), selected()));
+    await navigator.clipboard.writeText(briefText(project(), selected(), commerce()));
     copy.textContent = 'Brief copied';
     window.setTimeout(() => { copy.textContent = 'Copy project brief'; }, 1800);
   }
 
   function downloadBrief() {
-    downloadTextFile('website-project-first-phase-brief.txt', briefText(project(), selected()));
+    downloadTextFile('website-project-first-phase-brief.txt', briefText(project(), selected(), commerce()));
     download.textContent = 'Brief downloaded';
     window.setTimeout(() => { download.textContent = 'Download project brief'; }, 1800);
   }
 
-  [...boxes, ...types].forEach((control) => control.addEventListener('change', render));
+  [...boxes, ...types, ...commerceFields].forEach((control) => control.addEventListener('change', render));
   copy.addEventListener('click', () => copyBrief().catch(() => { copy.textContent = 'Copy unavailable'; }));
   download.addEventListener('click', downloadBrief);
   render();
