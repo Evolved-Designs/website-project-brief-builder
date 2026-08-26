@@ -60,13 +60,28 @@ export function commerceBriefLines(details = {}) {
   return labels.map(([key, label]) => `${label}: ${details[key] || 'unknown'}`);
 }
 
-export function briefText(project = 'company', selected = [], commerce = {}) {
+export function companyBriefLines(details = {}) {
+  const labels = [
+    ['audiences', 'Priority audiences'],
+    ['architecture', 'Service architecture'],
+    ['conversion', 'Primary conversion'],
+    ['content', 'Content readiness'],
+    ['systems', 'Forms and systems'],
+    ['risk', 'Data or compliance boundary']
+  ];
+  return labels.map(([key, label]) => `${label}: ${details[key] || 'unknown'}`);
+}
+
+export function briefText(project = 'company', selected = [], scope = {}) {
   const signal = projectSignal(selected);
   const phase = phaseCopy(selected);
   const commerceSection = project === 'commerce'
-    ? `\n\nCommerce boundaries\n${commerceBriefLines(commerce).join('\n')}`
+    ? `\n\nCommerce boundaries\n${commerceBriefLines(scope).join('\n')}`
     : '';
-  return `Website project first-phase brief\n\nProject type: ${project}\nReadiness: ${signal.label} (${new Set(selected).size}/8 decisions owned)\nRecommended phase: ${phase.heading}\nWhy: ${phase.summary}\nFirst unresolved decision: ${firstGap(selected)}${commerceSection}\n\nThis is a scope signal, not a price estimate or contract.`;
+  const companySection = project === 'company'
+    ? `\n\nCompany website boundaries\n${companyBriefLines(scope).join('\n')}`
+    : '';
+  return `Website project first-phase brief\n\nProject type: ${project}\nReadiness: ${signal.label} (${new Set(selected).size}/8 decisions owned)\nRecommended phase: ${phase.heading}\nWhy: ${phase.summary}\nFirst unresolved decision: ${firstGap(selected)}${companySection}${commerceSection}\n\nThis is a scope signal, not a price estimate or contract.`;
 }
 
 export function downloadTextFile(filename, text) {
@@ -85,7 +100,9 @@ function init() {
   const boxes = [...form.querySelectorAll('input[type="checkbox"]')];
   const types = [...form.querySelectorAll('input[name="project"]')];
   const commerceScope = form.querySelector('[data-commerce-scope]');
+  const companyScope = form.querySelector('[data-company-scope]');
   const commerceFields = [...form.querySelectorAll('[data-commerce-field]')];
+  const companyFields = [...form.querySelectorAll('[data-company-field]')];
   const score = document.querySelector('[data-score]');
   const band = document.querySelector('[data-band]');
   const phase = document.querySelector('[data-phase]');
@@ -97,6 +114,8 @@ function init() {
   const selected = () => boxes.filter((box) => box.checked).map((box) => box.value);
   const project = () => types.find((type) => type.checked)?.value ?? 'company';
   const commerce = () => Object.fromEntries(commerceFields.map((field) => [field.dataset.commerceField, field.value]));
+  const company = () => Object.fromEntries(companyFields.map((field) => [field.dataset.companyField, field.value]));
+  const scope = () => project() === 'commerce' ? commerce() : project() === 'company' ? company() : {};
 
   function render() {
     const values = selected();
@@ -110,21 +129,22 @@ function init() {
     contact.textContent = signal.cta;
     contact.href = contactUrl(project(), values);
     commerceScope.hidden = project() !== 'commerce';
+    companyScope.hidden = project() !== 'company';
   }
 
   async function copyBrief() {
-    await navigator.clipboard.writeText(briefText(project(), selected(), commerce()));
+    await navigator.clipboard.writeText(briefText(project(), selected(), scope()));
     copy.textContent = 'Brief copied';
     window.setTimeout(() => { copy.textContent = 'Copy project brief'; }, 1800);
   }
 
   function downloadBrief() {
-    downloadTextFile('website-project-first-phase-brief.txt', briefText(project(), selected(), commerce()));
+    downloadTextFile('website-project-first-phase-brief.txt', briefText(project(), selected(), scope()));
     download.textContent = 'Brief downloaded';
     window.setTimeout(() => { download.textContent = 'Download project brief'; }, 1800);
   }
 
-  [...boxes, ...types, ...commerceFields].forEach((control) => control.addEventListener('change', render));
+  [...boxes, ...types, ...commerceFields, ...companyFields].forEach((control) => control.addEventListener('change', render));
   copy.addEventListener('click', () => copyBrief().catch(() => { copy.textContent = 'Copy unavailable'; }));
   download.addEventListener('click', downloadBrief);
   render();
