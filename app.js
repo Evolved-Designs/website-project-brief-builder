@@ -54,6 +54,16 @@ export function briefText(project = 'company', selected = []) {
   return `Website project first-phase brief\n\nProject type: ${project}\nReadiness: ${signal.label} (${new Set(selected).size}/8 decisions owned)\nRecommended phase: ${phase.heading}\nWhy: ${phase.summary}\nFirst unresolved decision: ${firstGap(selected)}\n\nThis is a scope signal, not a price estimate or contract.`;
 }
 
+export function downloadTextFile(filename, text) {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function init() {
   const form = document.querySelector('[data-builder]');
   if (!form) return;
@@ -66,6 +76,7 @@ function init() {
   const gap = document.querySelector('[data-gap]');
   const contact = document.querySelector('[data-contact]');
   const copy = document.querySelector('[data-copy]');
+  const download = document.querySelector('[data-download]');
   const selected = () => boxes.filter((box) => box.checked).map((box) => box.value);
   const project = () => types.find((type) => type.checked)?.value ?? 'company';
 
@@ -88,8 +99,15 @@ function init() {
     window.setTimeout(() => { copy.textContent = 'Copy project brief'; }, 1800);
   }
 
+  function downloadBrief() {
+    downloadTextFile('website-project-first-phase-brief.txt', briefText(project(), selected()));
+    download.textContent = 'Brief downloaded';
+    window.setTimeout(() => { download.textContent = 'Download project brief'; }, 1800);
+  }
+
   [...boxes, ...types].forEach((control) => control.addEventListener('change', render));
   copy.addEventListener('click', () => copyBrief().catch(() => { copy.textContent = 'Copy unavailable'; }));
+  download.addEventListener('click', downloadBrief);
   render();
 }
 
