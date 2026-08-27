@@ -41,7 +41,7 @@ export function contactUrl(project = 'company', selected = []) {
   const types = ['company', 'commerce', 'content', 'publication', 'operations', 'automation'];
   const valid = types.includes(project) ? project : 'company';
   const url = new URL('https://evolveddesigns.net/contact-us/');
-  url.searchParams.set('utm_source', 'github_pages');
+  url.searchParams.set('utm_source', 'github');
   url.searchParams.set('utm_medium', 'owned_tool');
   url.searchParams.set('utm_campaign', 'project_brief_builder');
   url.searchParams.set('utm_content', `${valid}_${projectSignal(selected).band}`);
